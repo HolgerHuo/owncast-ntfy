@@ -1,0 +1,26 @@
+version: 2
+
+before:
+  hooks:
+    - go mod download
+    - go mod tidy
+builds:
+  - binary: owncast-ntfy
+    ldflags:
+      - "-extldflags=-static -s -w"
+    goos:
+      - linux
+      - windows
+      - darwin
+    goamd64:
+      - v2
+    goarm:
+      - 7
+    goarch:
+      - amd64
+      - arm64
+archives:
+  - name_template: "{{ .ProjectName }}-{{ .Os }}-{{ .Arch }}"
+    format: tar.gz
+release:
+  prerelease: auto
